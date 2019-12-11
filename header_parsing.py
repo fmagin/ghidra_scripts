@@ -9,16 +9,29 @@ parser.add_argument('--output', '-o',
 
 args = parser.parse_args()
 
+import pycparser
+
+pycparser.parse_file()
+
 import logging
 
 print("Connecting to bridge")
-import ghidra_bridge
 
-b = ghidra_bridge.GhidraBridge(namespace=globals())
+import typing
+if typing.TYPE_CHECKING:
+    import ghidra
+else:
+    import ghidra_bridge
+    b = ghidra_bridge.GhidraBridge(namespace=globals())
+    ghidra = b.bridge.remote_import("ghidra")
+    java = b.bridge.remote_import("java")
 
-java = b.bridge.remote_import("java")
-ghidra = b.bridge.remote_import("ghidra")
-
+# ast = parse_file(filename, use_cpp=True)
+#
+#from pycparser import c_generator
+# generator = c_generator.CGenerator()
+#
+# print(generator.visit(ast))
 
 print("Creating parser")
 if args.output:
