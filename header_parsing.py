@@ -7,31 +7,31 @@ parser.add_argument('--output', '-o',
                     help='Path of the output file (must not exist yet!)')
 #parser.add_argument('--overwrite', '-f', help="Overwrite the output file if it already exists", action='store_true')
 
-args = parser.parse_args()
 
-import pycparser
 
-pycparser.parse_file()
-
-import logging
-
-print("Connecting to bridge")
 
 import typing
 if typing.TYPE_CHECKING:
     import ghidra
 else:
     import ghidra_bridge
-    b = ghidra_bridge.GhidraBridge(namespace=globals())
-    ghidra = b.bridge.remote_import("ghidra")
-    java = b.bridge.remote_import("java")
+    try:
+        _bridge
+        print("_bridge exists, probably running under ipyghidra")
+    except NameError:
+        print("Connecting to bridge")
+        _bridge = ghidra_bridge.GhidraBridge(namespace=globals())
+    ghidra = _bridge.bridge.remote_import("ghidra")
+    java = _bridge.bridge.remote_import("java")
 
-# ast = parse_file(filename, use_cpp=True)
-#
-#from pycparser import c_generator
-# generator = c_generator.CGenerator()
-#
-# print(generator.visit(ast))
+
+
+args = parser.parse_args()
+
+import pycparser
+import logging
+
+
 
 print("Creating parser")
 if args.output:
