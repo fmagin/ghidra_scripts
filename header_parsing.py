@@ -52,7 +52,7 @@ if args.output:
     dtm.save()
     dtm.close()
 else:
-    types = b.bridge.remote_eval("list(cparser.getDataTypeManager().getAllDataTypes())", cparser=cparser)
+    types = _bridge.bridge.remote_eval("list(cparser.getDataTypeManager().getAllDataTypes())", cparser=cparser)
     for t in types:
         print(repr(t))
 

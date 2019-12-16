@@ -2,8 +2,8 @@
 //@author Florian Magin
 //@category Data Types
 //@keybinding
-//@menupath
-//@toolbar
+//@menupath Data Types.Parse C Snippet
+//@toolbar cache.png
 
 import docking.DialogComponentProvider;
 import ghidra.app.script.GhidraScript;
